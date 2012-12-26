@@ -1,0 +1,29 @@
+<html>
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        $(function(){
+            var iosocket = io.connect();
+ 
+            iosocket.on('connect', function () {
+                $('#incomingCommands').append($('<li>Connected</li>'));
+            });
+            iosocket.on('message', function(message) {
+                console.log('iosocket message');
+                $('#incomingCommands').append($('<li></li>').text('Incoming: '+message));
+            });
+            
+            iosocket.on('disconnect', function() {
+                $('#incomingCommands').append('<li>Disconnected</li>');
+            });
+        });
+    </script>
+</head>
+<body>
+    <p><small><em>To send commands go <a href="./control" target="_blank">here</a></em></small></p>
+    <hr>
+    <h1>Incoming keyboard commands:</h1>
+    <ul id="incomingCommands"></ul>
+</body>
+</html>
